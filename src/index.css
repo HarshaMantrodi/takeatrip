@@ -396,3 +396,123 @@ h4, h5, h6 {
   }
 }
 
+/* Mobile Responsiveness Media Queries */
+@media (max-width: 820px) {
+  h1 {
+    font-size: 2.4rem !important;
+    line-height: 1.2 !important;
+  }
+  h2 {
+    font-size: 1.8rem !important;
+  }
+  .container {
+    padding: 0 16px !important;
+  }
+
+  /* Hero Grids */
+  .hero-container {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+    gap: 30px !important;
+    padding-top: 100px !important;
+  }
+  .hero-container > div {
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .hero-container p {
+    margin: 0 auto !important;
+  }
+  
+  /* Trust Stats Grid */
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr) !important;
+    padding: 20px 10px !important;
+    gap: 16px 8px !important;
+  }
+  .stats-container > div {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 8px;
+  }
+  .stats-container > div:last-child {
+    border-bottom: none !important;
+  }
+
+  /* Three Column Grids */
+  .expertise-grid, .why-choose-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Itinerary & Planner Grids */
+  .itinerary-grid, .planner-grid {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+
+  /* Footer layout */
+  .footer-card-grid {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+    padding: 24px 16px !important;
+  }
+
+  /* Blog Layouts */
+  .blog-featured-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    padding: 16px !important;
+  }
+  .blog-featured-grid > div:last-child {
+    height: 180px !important;
+  }
+
+  /* Admin Dashboard Layout */
+  .admin-layout-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  .admin-sidebar {
+    flex-direction: row !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    padding: 10px !important;
+    gap: 10px !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    height: auto !important;
+    position: sticky !important;
+    top: 72px !important;
+    background: rgba(11, 15, 25, 0.9) !important;
+    backdrop-filter: blur(10px) !important;
+    z-index: 100 !important;
+  }
+  .admin-sidebar button {
+    white-space: nowrap !important;
+    font-size: 0.8rem !important;
+    padding: 8px 12px !important;
+  }
+  .admin-header-stats {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Hide Desktop Nav Menu */
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-menu-btn {
+    display: flex !important;
+  }
+}
+
+/* Base styles for responsive helpers */
+.mobile-menu-btn {
+  display: none;
+}
+.desktop-nav {
+  display: flex;
+}
+
+

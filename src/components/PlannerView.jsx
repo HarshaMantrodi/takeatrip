@@ -146,7 +146,7 @@ const PlannerView = ({ onSaveInquiry }) => {
         </p>
       </div>
 
-      <div style={{
+      <div className="planner-grid" style={{
         display: 'grid',
         gridTemplateColumns: '1.2fr 0.8fr',
         gap: '40px',

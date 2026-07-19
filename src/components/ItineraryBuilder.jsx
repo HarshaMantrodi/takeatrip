@@ -148,7 +148,7 @@ const ItineraryBuilder = ({ destination, onSaveInquiry }) => {
   };
 
   return (
-    <div style={{
+    <div className="itinerary-grid" style={{
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
       gap: '24px',

@@ -167,7 +167,7 @@ const AdminPanel = ({ currentRole, inquiries, setInquiries, blogs, setBlogs }) =
 
   return (
     <div className="container" style={{ paddingTop: '110px', minHeight: '85vh', fontFamily: 'var(--font-sans)' }}>
-      <div style={{
+      <div className="admin-layout-grid" style={{
         display: 'grid',
         gridTemplateColumns: '260px 1fr',
         gap: '30px',
@@ -190,7 +190,7 @@ const AdminPanel = ({ currentRole, inquiries, setInquiries, blogs, setBlogs }) =
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <div className="admin-sidebar" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
             {menuItems.map(item => {
               const isAllowed = hasPermission(item.roles);
               const isActive = activeTab === item.id;

@@ -59,7 +59,7 @@ const BlogView = ({ blogs }) => {
           {/* Featured Article Banner */}
           {publishedBlogs[0] && (
             <div 
-              className="glass-interactive" 
+              className="glass-interactive blog-featured-grid" 
               onClick={() => setActiveArticle(publishedBlogs[0])}
               style={{
                 display: 'grid',

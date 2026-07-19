@@ -68,7 +68,7 @@ const ClientView = ({ onSaveInquiry, setActiveRoute }) => {
           }} />
         </div>
 
-        <div className="container" style={{
+        <div className="container hero-container" style={{
           display: 'grid',
           gridTemplateColumns: '1.2fr 0.8fr',
           gap: '40px',
@@ -126,7 +126,7 @@ const ClientView = ({ onSaveInquiry, setActiveRoute }) => {
 
       {/* Trust Badges / Stats Section */}
       <section className="container" style={{ marginBottom: '80px' }}>
-        <div className="glass" style={{
+        <div className="glass stats-container" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(5, 1fr)',
           padding: '30px 20px',
@@ -171,7 +171,7 @@ const ClientView = ({ onSaveInquiry, setActiveRoute }) => {
           </p>
         </div>
 
-        <div style={{
+        <div className="expertise-grid" style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr 1fr',
           gap: '24px'
@@ -267,7 +267,7 @@ const ClientView = ({ onSaveInquiry, setActiveRoute }) => {
           </p>
         </div>
 
-        <div style={{
+        <div className="why-choose-grid" style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr 1fr',
           gap: '24px'
@@ -538,7 +538,7 @@ const ClientView = ({ onSaveInquiry, setActiveRoute }) => {
 
       {/* Corporate Info Footer */}
       <section className="container" style={{ scrollMarginTop: '100px' }}>
-        <div className="glass" style={{
+        <div className="glass footer-card-grid" style={{
           padding: '40px',
           background: 'var(--bg-card)',
           border: '1px solid var(--border-glass)',
