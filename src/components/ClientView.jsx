@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, MapPin, Star, Shield, Award, HelpCircle, Phone, Mail, Compass, ChevronRight, X, ArrowUpRight } from 'lucide-react';
+import { Search, MapPin, Star, Shield, Award, HelpCircle, Phone, Mail, Compass, ChevronRight, X, ArrowUpRight, Globe, Users } from 'lucide-react';
 import ThreeDGlobe from './ThreeDGlobe';
 import ItineraryBuilder from './ItineraryBuilder';
 import { domesticDestinations, internationalDestinations, clientReviews } from '../data/destinations';
@@ -32,7 +32,42 @@ const ClientView = ({ onSaveInquiry, setActiveRoute }) => {
   return (
     <div style={{ paddingBottom: '80px' }}>
       {/* Hero Section */}
-      <section className="hero-section" style={{ paddingBottom: '60px' }}>
+      <section className="hero-section" style={{ paddingBottom: '60px', position: 'relative' }}>
+        {/* Background video overlay */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          overflow: 'hidden',
+          zIndex: -1,
+          opacity: 0.35 // subtle background overlay
+        }}>
+          <video 
+            autoPlay 
+            muted 
+            loop 
+            playsInline
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
+            }}
+          >
+            <source src="https://video.wixstatic.com/video/368f6b_75bc0cbc23d64119acd2f9cdba9d2901/1080p/mp4/file.mp4" type="video/mp4" />
+          </video>
+          {/* Subtle overlay gradient to blend into page colors */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'linear-gradient(to bottom, rgba(7, 10, 19, 0.4) 0%, var(--bg-space) 100%)'
+          }} />
+        </div>
+
         <div className="container" style={{
           display: 'grid',
           gridTemplateColumns: '1.2fr 0.8fr',
@@ -124,6 +159,102 @@ const ClientView = ({ onSaveInquiry, setActiveRoute }) => {
           ))}
         </div>
       </section>
+
+      {/* Our Core Expertise Section */}
+      <section className="container" style={{ marginBottom: '80px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <h2 style={{ fontSize: '2.2rem', marginBottom: '10px' }} className="gradient-text">
+            Our Core Expertise
+          </h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+            We specialize in creating tailored itineraries across three distinct travel disciplines.
+          </p>
+        </div>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 1fr',
+          gap: '24px'
+        }}>
+          {[
+            {
+              icon: <Users size={32} style={{ color: 'var(--color-primary)' }} />,
+              title: "Curated Group Journeys",
+              desc: "Perfect for families, corporate retreats, and group tours. Pre-scheduled departures with professional guides, stays, and transit pre-arranged.",
+              action: "View Group Tours",
+              onClick: () => {
+                setFilterType('all');
+                setSelectedTag('Adventure');
+                setTimeout(() => {
+                  document.getElementById('destinations-grid')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }
+            },
+            {
+              icon: <Compass size={32} style={{ color: 'var(--color-secondary)' }} />,
+              title: "Handpicked Indian Escapes",
+              desc: "From snow-capped mountain valleys to quiet palm-fringed tropical backwaters. Experience the cultural heritage and scenic beauty of India.",
+              action: "Explore Domestic Trips",
+              onClick: () => {
+                setFilterType('domestic');
+                setSelectedTag('');
+                setTimeout(() => {
+                  document.getElementById('destinations-grid')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }
+            },
+            {
+              icon: <Globe size={32} style={{ color: 'var(--color-accent)' }} />,
+              title: "Global Travel Experiences",
+              desc: "Immersive international holiday packages covering stunning destinations across the Middle East, Southeast Asia, Indian Ocean, and Europe.",
+              action: "Explore International Trips",
+              onClick: () => {
+                setFilterType('international');
+                setSelectedTag('');
+                setTimeout(() => {
+                  document.getElementById('destinations-grid')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }
+            }
+          ].map((item, idx) => (
+            <div 
+              key={idx} 
+              className="glass-interactive card-3d" 
+              onClick={item.onClick}
+              style={{ 
+                padding: '30px', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: '16px', 
+                cursor: 'pointer',
+                background: 'rgba(15, 23, 42, 0.45)',
+                borderRadius: '16px',
+                border: '1px solid var(--border-glass)',
+                boxShadow: 'var(--glass-shadow)',
+                transition: 'var(--transition-normal)'
+              }}
+            >
+              <div style={{
+                background: 'rgba(255,255,255,0.03)',
+                width: '60px',
+                height: '60px',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '1px solid var(--border-glass)'
+              }}>{item.icon}</div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '700' }}>{item.title}</h3>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6', flexGrow: 1 }}>{item.desc}</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem', color: 'var(--color-primary)', fontWeight: '600', marginTop: '12px' }}>
+                <span>{item.action}</span>
+                <ArrowUpRight size={14} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
 
       {/* Features Overview */}
       <section className="container" style={{ marginBottom: '80px' }}>

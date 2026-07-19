@@ -73,6 +73,64 @@ export const domesticDestinations = [
       { day: 3, title: "Jaipur to Udaipur (City of Lakes)", details: "Drive to Udaipur. Check-in to a lakeview hotel. Enjoy a evening boat ride on Lake Pichola." },
       { day: 4, title: "Udaipur Palaces & Lakes Tour", details: "Visit the grand City Palace, Jagdish Temple, Saheliyon-ki-Bari, and Sajjangarh Monsoon Palace." }
     ]
+  },
+  {
+    id: "kashmir",
+    name: "Paradise Kashmir (Srinagar & Gulmarg)",
+    price: 18500,
+    rating: 4.9,
+    image: "https://images.unsplash.com/photo-1566837945700-30057527ade0?auto=format&fit=crop&w=800&q=80",
+    tags: ["Nature", "Snow", "Honeymoon"],
+    description: "Experience absolute paradise with wooden houseboats on Dal Lake and snow-laden Gondola rides in Gulmarg.",
+    itinerary: [
+      { day: 1, title: "Srinagar Shikara Arrival", details: "Arrive in Srinagar. Check-in to a traditional deluxe wood-carved Houseboat. Enjoy an evening Shikara ride on Dal Lake." },
+      { day: 2, title: "Srinagar Mughal Gardens Tour", details: "Visit Shalimar Bagh, Nishat Bagh, and Chashme Shahi Mughal gardens. Explore local handicraft markets." },
+      { day: 3, title: "Gulmarg Gondola Ride", details: "Excursion to Gulmarg. Ride the famous highest phase-2 Gondola cable car for panoramic snowy mountain views." },
+      { day: 4, title: "Pahalgam Valley Tour", details: "Drive to Pahalgam (Valley of Shepherds). Visit Betaab Valley, Aru Valley, and stroll along the Lidder River." }
+    ]
+  },
+  {
+    id: "tirupati",
+    name: "Divine Tirupati Temple Tour",
+    price: 5500,
+    rating: 4.8,
+    image: "https://images.unsplash.com/photo-1600100397990-a472390f48c1?auto=format&fit=crop&w=800&q=80",
+    tags: ["Pilgrimage", "Spiritual", "Heritage"],
+    description: "A seamless spiritual journey to the holy hills of Tirumala for Special Entry Darshan and local temple tours.",
+    itinerary: [
+      { day: 1, title: "Arrival in Tirupati & Local Temples", details: "Arrive in Tirupati. Check-in. Visit the Padmavathi Ammavari Temple and Kapila Theertham water falls." },
+      { day: 2, title: "Tirumala Balaji Darshan", details: "Ascend Tirumala hills. Participate in VIP Special Entry Darshan of Lord Venkateswara. Collect prasadam and return." }
+    ]
+  },
+  {
+    id: "karnataka",
+    name: "Karnataka Heritage & Hills (Hampi & Coorg)",
+    price: 10500,
+    rating: 4.7,
+    image: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=800&q=80",
+    tags: ["Heritage", "Nature", "Architecture"],
+    description: "Explore the ancient ruins of the Vijayanagara Empire at Hampi and breathe fresh coffee-scented air in Coorg hills.",
+    itinerary: [
+      { day: 1, title: "Hampi Ruins Exploration", details: "Arrive at Hampi. Visit the Stone Chariot at Vittala Temple, Virupaksha Temple, and watch sunset from Hemakuta Hill." },
+      { day: 2, title: "Hampi Royal Enclosure", details: "Explore Lotus Mahal, Queen's Bath, and Elephant Stables. Cross the Tungabhadra river in a local coracle boat." },
+      { day: 3, title: "Coorg Hill Station Check-in", details: "Drive to Coorg (Madikeri). Visit the Golden Temple (Tibet Monastary) at Bylakuppe enroute." },
+      { day: 4, title: "Coorg Tea Estates & Waterfalls", details: "Visit Abbey Falls, Raja's Seat for panoramic valley views, and walk through private cardamom and coffee plantations." }
+    ]
+  },
+  {
+    id: "gujarat",
+    name: "Rann of Kutch & Gir Forest (Gujarat)",
+    price: 12900,
+    rating: 4.6,
+    image: "https://images.unsplash.com/photo-1627894483216-2138af692e32?auto=format&fit=crop&w=800&q=80",
+    tags: ["Wildlife", "Culture", "Desert"],
+    description: "Behold the sparkling white salt plains of the Great Rann of Kutch and spot Asiatic Lions in Gir National Park.",
+    itinerary: [
+      { day: 1, title: "Bhuj Arrival & White Rann", details: "Arrive in Bhuj. Check-in to traditional Kutchi tents at Dhordo Rann Utsav. Stroll on the white salt desert during sunset." },
+      { day: 2, title: "Rann Safari & Craft Villages", details: "Enjoy a camel cart ride on the desert. Visit local artisan villages like Nirona to see Rogan art creation." },
+      { day: 3, title: "Gir Sanctuary Wildlife Safari", details: "Travel to Sasan Gir. Embark on a thrilling morning open-jeep safari to spot Asiatic Lions in their natural habitat." },
+      { day: 4, title: "Somnath Temple Tour", details: "Visit the grand Shore Somnath Temple, one of the 12 sacred Jyotirlingas, and watch the evening light show." }
+    ]
   }
 ];
 
@@ -136,6 +194,36 @@ export const internationalDestinations = [
       { day: 3, title: "Halong Caves & Kayaking", details: "Visit Sung Sot (Surprise) Cave. Kayak around Luon Cave and swim at Titop Island beach." },
       { day: 4, title: "Hanoi City Landmarks & Departure", details: "Return to Hanoi. Visit Ho Chi Minh Mausoleum and Temple of Literature before boarding your flight." }
     ]
+  },
+  {
+    id: "singapore",
+    name: "Singapore & Malaysia City Explorer",
+    price: 49000,
+    rating: 4.8,
+    image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80",
+    tags: ["City", "Family", "Shopping"],
+    description: "Visit the futuristic Gardens by the Bay, ride Sentosa cable cars, and stand under the majestic Petronas Twin Towers.",
+    itinerary: [
+      { day: 1, title: "Singapore Arrival & Night Safari", details: "Arrive in Singapore. Check-in. Experience the world's first nocturnal wildlife zoo night safari tram ride." },
+      { day: 2, title: "Universal Studios Theme Park", details: "Spend a full day enjoying thrilling themed rides, movie sets, and shows at Universal Studios Singapore on Sentosa." },
+      { day: 3, title: "Gardens by the Bay & Travel to KL", details: "Visit Flower Dome and Cloud Forest. Take a luxury coach/flight to Kuala Lumpur, Malaysia." },
+      { day: 4, title: "KL Twin Towers & Batu Caves", details: "Walk the Skybridge at Petronas Twin Towers. Visit Batu Caves with its massive golden Murugan statue." }
+    ]
+  },
+  {
+    id: "srilanka",
+    name: "Sri Lanka Island Wonders",
+    price: 27900,
+    rating: 4.7,
+    image: "https://images.unsplash.com/photo-1588598126483-241048312157?auto=format&fit=crop&w=800&q=80",
+    tags: ["Beach", "Culture", "Nature"],
+    description: "Explore the ancient fortresses of Sigiriya, the tea estates of Nuwara Eliya, and golden beaches of Bentota.",
+    itinerary: [
+      { day: 1, title: "Colombo Arrival & Sightseeing", details: "Arrive in Colombo. Explore Gangaramaya Temple, Galle Face Green beach walks, and historic colonial quarters." },
+      { day: 2, title: "Sigiriya Rock Fortress", details: "Drive to Sigiriya. Climb the ancient majestic Lion Rock Fortress, a UNESCO World Heritage site." },
+      { day: 3, title: "Kandy Temple & Spice Gardens", details: "Travel to Kandy. Visit the sacred Temple of the Tooth Relic and stroll around Kandy Lake." },
+      { day: 4, title: "Bentota Golden Beach & Water Sports", details: "Travel to Bentota beach resort. Enjoy speed boating, wind surfing, or relax on sandy beaches." }
+    ]
   }
 ];
 
@@ -183,7 +271,6 @@ export const clientReviews = [
     date: "June 2026"
   }
 ];
-
 
 export const userRoles = {
   SUPER_ADMIN: {

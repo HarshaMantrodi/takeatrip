@@ -3,15 +3,24 @@ import Navbar from './components/Navbar';
 import ClientView from './components/ClientView';
 import PlannerView from './components/PlannerView';
 import AdminPanel from './components/AdminPanel';
+import BlogView from './components/BlogView';
 import RoleSwitcher from './components/RoleSwitcher';
-import { userRoles } from './data/destinations';
-import { Bell, Sparkles, Plane, Phone } from 'lucide-react';
+import { userRoles, clientReviews } from './data/destinations';
+import { Bell, Sparkles, Plane, Phone, Star, X } from 'lucide-react';
 
 function App() {
   const [activeRoute, setActiveRoute] = useState('home');
   const [currentRole, setCurrentRole] = useState(userRoles.SUPER_ADMIN); // Default to Super Admin for trial convenience
   const [isLightTheme, setIsLightTheme] = useState(false);
   const [toast, setToast] = useState(null);
+  const [activeReviewPopup, setActiveReviewPopup] = useState(null);
+
+  // Dynamic Blog State
+  const [blogs, setBlogs] = useState([
+    { id: 1, title: "Secret Beaches of Neil Island", author: "Priya Nair", status: "Published", date: "15 June 2026", views: 2450 },
+    { id: 2, title: "Top 10 Street Food Spots in Bangkok", author: "Rohan Deshmukh", status: "Draft", date: "10 July 2026", views: 0 },
+    { id: 3, title: "Trekking across Solang Valley", author: "Vikram Sen", status: "Pending Review", date: "18 July 2026", views: 0 }
+  ]);
   
   // Custom cursor & sparkles trail state
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
@@ -75,6 +84,27 @@ function App() {
     return () => clearInterval(interval);
   }, [particles]);
 
+  // Rotate popping testimonial reviews
+  useEffect(() => {
+    const showRandomReview = () => {
+      const randomReview = clientReviews[Math.floor(Math.random() * clientReviews.length)];
+      setActiveReviewPopup(randomReview);
+      setTimeout(() => {
+        setActiveReviewPopup(null);
+      }, 7000);
+    };
+
+    const interval = setInterval(showRandomReview, 20000);
+    
+    // Initial popup after 5 seconds
+    const initialTimeout = setTimeout(showRandomReview, 5000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(initialTimeout);
+    };
+  }, []);
+
   // Simulated database for inquiries
   const [inquiries, setInquiries] = useState([
     {
@@ -134,8 +164,8 @@ function App() {
     switch (activeRoute) {
       case 'home':
         return <ClientView onSaveInquiry={handleSaveInquiry} setActiveRoute={setActiveRoute} />;
-      case 'destinations':
-        return <ClientView onSaveInquiry={handleSaveInquiry} setActiveRoute={setActiveRoute} />;
+      case 'blog':
+        return <BlogView blogs={blogs} />;
       case 'planner':
         return <PlannerView onSaveInquiry={handleSaveInquiry} />;
       case 'admin':
@@ -144,6 +174,8 @@ function App() {
             currentRole={currentRole} 
             inquiries={inquiries} 
             setInquiries={setInquiries} 
+            blogs={blogs}
+            setBlogs={setBlogs}
           />
         );
       default:
@@ -297,6 +329,54 @@ function App() {
           <Phone size={20} style={{ color: '#ffffff' }} />
         </a>
       </div>
+
+      {/* Popping Testimonial Toast */}
+      {activeReviewPopup && (
+        <div className="glass" style={{
+          position: 'fixed',
+          bottom: '90px',
+          left: '24px',
+          width: '320px',
+          padding: '16px',
+          background: 'rgba(11, 15, 25, 0.95)',
+          border: '1px solid var(--border-glow)',
+          borderRadius: '12px',
+          boxShadow: 'var(--gold-shadow), var(--glass-shadow)',
+          zIndex: 9998,
+          animation: 'slideInLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+          fontFamily: 'var(--font-sans)',
+        }}>
+          <button 
+            onClick={() => setActiveReviewPopup(null)}
+            style={{
+              position: 'absolute',
+              top: '8px',
+              right: '8px',
+              background: 'none',
+              border: 'none',
+              color: 'var(--text-muted)',
+              cursor: 'pointer'
+            }}
+          >
+            <X size={12} />
+          </button>
+
+          <div style={{ display: 'flex', gap: '2px', marginBottom: '8px' }}>
+            {[...Array(activeReviewPopup.rating || 5)].map((_, i) => (
+              <Star key={i} size={12} fill="var(--color-accent)" color="var(--color-accent)" />
+            ))}
+          </div>
+
+          <p style={{ fontSize: '0.75rem', fontStyle: 'italic', color: 'var(--text-secondary)', marginBottom: '8px', lineHeight: '1.4' }}>
+            "{activeReviewPopup.review}"
+          </p>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.7rem' }}>
+            <span style={{ fontWeight: 'bold', color: 'var(--color-primary)' }}>— {activeReviewPopup.name}</span>
+            <span style={{ color: 'var(--text-muted)' }}>Verified Guest ({activeReviewPopup.city})</span>
+          </div>
+        </div>
+      )}
 
       {/* Floating Toast Notification */}
       {toast && (

@@ -385,3 +385,14 @@ h4, h5, h6 {
   transition: transform 0.1s ease, opacity 0.8s ease;
 }
 
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+

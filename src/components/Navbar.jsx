@@ -17,7 +17,7 @@ const Navbar = ({ activeRoute, setActiveRoute, currentRole, setCurrentRole, isLi
 
   const navItems = [
     { label: 'Home', id: 'home' },
-    { label: 'Destinations', id: 'destinations' },
+    { label: 'Guides & Blogs', id: 'blog' },
     { label: 'Itinerary Planner', id: 'planner' },
     { label: 'Admin Console', id: 'admin' },
   ];

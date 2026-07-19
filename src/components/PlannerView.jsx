@@ -20,6 +20,11 @@ const PlannerView = ({ onSaveInquiry }) => {
 
   const [isSuccess, setIsSuccess] = useState(false);
 
+  // Coupon States
+  const [couponCode, setCouponCode] = useState('');
+  const [discountApplied, setDiscountApplied] = useState(0);
+  const [couponMessage, setCouponMessage] = useState('');
+
   const allPresets = [...domesticDestinations, ...internationalDestinations];
 
   // Handle Preset Destination Change
@@ -27,7 +32,6 @@ const PlannerView = ({ onSaveInquiry }) => {
     const dest = allPresets.find(d => d.id === e.target.value);
     if (dest) {
       setSelectedDest(dest);
-      // Map its default itinerary
       setDays(dest.itinerary.map(item => ({
         day: item.day,
         title: item.title,
@@ -66,17 +70,13 @@ const PlannerView = ({ onSaveInquiry }) => {
   // Calculate pricing
   const calculateEstimate = () => {
     const baseRate = destType === 'preset' ? selectedDest.price : 18000;
-    
-    // Duration additions
     const durationMultiplier = days.length * 2000;
 
-    // Hotel tier rate
     let hotelCost = 0;
     if (hotelTier === 'standard') hotelCost = days.length * 1500;
     else if (hotelTier === 'deluxe') hotelCost = days.length * 3000;
     else if (hotelTier === 'luxury') hotelCost = days.length * 7500;
 
-    // Transport cost
     let transportCost = 0;
     if (transport === 'sedan') transportCost = days.length * 2000;
     else if (transport === 'suv') transportCost = days.length * 3500;
@@ -84,9 +84,29 @@ const PlannerView = ({ onSaveInquiry }) => {
     return Math.round((baseRate + durationMultiplier + hotelCost + transportCost) * travelers);
   };
 
+  const handleApplyCoupon = () => {
+    const subtotal = calculateEstimate();
+    if (couponCode === 'WELCOME10') {
+      const discount = Math.round(subtotal * 0.1);
+      setDiscountApplied(discount);
+      setCouponMessage(`✓ Coupon WELCOME10 applied! Saved ₹${discount.toLocaleString('en-IN')}`);
+    } else if (couponCode === 'TRIP5000') {
+      const discount = 5000;
+      setDiscountApplied(discount);
+      setCouponMessage(`✓ Coupon TRIP5000 applied! Saved ₹5,000`);
+    } else if (!couponCode) {
+      setDiscountApplied(0);
+      setCouponMessage('');
+    } else {
+      setDiscountApplied(0);
+      setCouponMessage('✗ Invalid coupon code.');
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const finalPrice = calculateEstimate();
+    const subtotal = calculateEstimate();
+    const finalPrice = Math.max(0, subtotal - discountApplied);
     const destinationName = destType === 'preset' ? selectedDest.name : (customDestName || 'Custom Destination');
     
     const inquiry = {
@@ -108,8 +128,10 @@ const PlannerView = ({ onSaveInquiry }) => {
     setIsSuccess(true);
     setTimeout(() => {
       setIsSuccess(false);
-      // Reset some fields
       setStartDate('');
+      setCouponCode('');
+      setDiscountApplied(0);
+      setCouponMessage('');
     }, 3000);
   };
 
@@ -409,6 +431,56 @@ const PlannerView = ({ onSaveInquiry }) => {
                 </select>
               </div>
 
+              {/* Promo Coupon Inputs */}
+              <div>
+                <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '6px' }}>Promo Coupon Code</label>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <input
+                    type="text"
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                    placeholder="e.g. WELCOME10"
+                    style={{
+                      flex: 1,
+                      padding: '8px 12px',
+                      background: 'var(--bg-input)',
+                      border: '1px solid var(--border-glass)',
+                      color: 'var(--text-primary)',
+                      borderRadius: '6px',
+                      outline: 'none',
+                      fontSize: '0.8rem'
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleApplyCoupon}
+                    style={{
+                      padding: '8px 14px',
+                      background: 'rgba(255,255,255,0.05)',
+                      border: '1px solid var(--border-glass)',
+                      color: 'var(--text-primary)',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      fontSize: '0.75rem',
+                      fontWeight: '600'
+                    }}
+                  >
+                    Apply
+                  </button>
+                </div>
+                {couponMessage && (
+                  <span style={{ 
+                    fontSize: '0.7rem', 
+                    color: discountApplied > 0 ? '#10b981' : '#ef4444',
+                    marginTop: '4px',
+                    display: 'block',
+                    fontWeight: '500'
+                  }}>
+                    {couponMessage}
+                  </span>
+                )}
+              </div>
+
               {/* Pricing breakdown */}
               <div style={{
                 background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.04) 0%, rgba(14, 165, 233, 0.04) 100%)',
@@ -421,14 +493,20 @@ const PlannerView = ({ onSaveInquiry }) => {
                   <span>Total Duration:</span>
                   <span>{days.length} Days</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '6px' }}>
                   <span>Price per person:</span>
                   <span>₹{Math.round(calculateEstimate() / travelers).toLocaleString('en-IN')}</span>
                 </div>
+                {discountApplied > 0 && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#10b981', marginBottom: '6px' }}>
+                    <span>Promo Discount:</span>
+                    <span>- ₹{discountApplied.toLocaleString('en-IN')}</span>
+                  </div>
+                )}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '10px' }}>
                   <span style={{ fontSize: '0.85rem', fontWeight: 'bold' }}>Cost Estimator:</span>
                   <span style={{ fontSize: '1.3rem', fontWeight: '800', color: 'var(--color-primary)' }}>
-                    ₹{calculateEstimate().toLocaleString('en-IN')}
+                    ₹{Math.max(0, calculateEstimate() - discountApplied).toLocaleString('en-IN')}
                   </span>
                 </div>
               </div>

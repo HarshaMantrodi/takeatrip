@@ -5,15 +5,9 @@ import {
 } from 'lucide-react';
 import { domesticDestinations, internationalDestinations } from '../data/destinations';
 
-const AdminPanel = ({ currentRole, inquiries, setInquiries }) => {
+const AdminPanel = ({ currentRole, inquiries, setInquiries, blogs, setBlogs }) => {
   const [activeTab, setActiveTab] = useState('overview');
   
-  // Blog drafts state
-  const [blogs, setBlogs] = useState([
-    { id: 1, title: "Secret Beaches of Neil Island", author: "Priya Nair", status: "Published", date: "15 June 2026", views: 2450 },
-    { id: 2, title: "Top 10 Street Food Spots in Bangkok", author: "Rohan Deshmukh", status: "Draft", date: "10 July 2026", views: 0 },
-    { id: 3, title: "Trekking across Solang Valley", author: "Vikram Sen", status: "Pending Review", date: "18 July 2026", views: 0 }
-  ]);
   const [newBlogTitle, setNewBlogTitle] = useState('');
   const [newBlogBody, setNewBlogBody] = useState('');
 
