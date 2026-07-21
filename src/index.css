@@ -498,6 +498,19 @@ h4, h5, h6 {
     gap: 12px !important;
   }
 
+  /* Modal Spacing overrides for touch viewports */
+  .modal-wrapper {
+    padding: 8px !important;
+  }
+  .modal-glass-container {
+    padding: 16px !important;
+    border-radius: 12px !important;
+    max-height: 96vh !important;
+  }
+  .modal-body {
+    padding: 12px !important;
+  }
+
   /* Hide Desktop Nav Menu */
   .desktop-nav {
     display: none !important;

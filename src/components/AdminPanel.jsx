@@ -4,6 +4,7 @@ import {
   AlertTriangle, Key, Plus, FileText, Send, Trash2, Calendar, ShieldCheck 
 } from 'lucide-react';
 import { domesticDestinations, internationalDestinations } from '../data/destinations';
+import ThreeDGlobe from './ThreeDGlobe';
 
 const AdminPanel = ({ currentRole, inquiries, setInquiries, blogs, setBlogs }) => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -188,6 +189,11 @@ const AdminPanel = ({ currentRole, inquiries, setInquiries, blogs, setBlogs }) =
               <ShieldCheck size={14} style={{ color: currentRole.color }} />
               <strong style={{ fontSize: '0.85rem' }}>{currentRole.role}</strong>
             </div>
+          </div>
+
+          {/* Desktop-only 3D Globe element */}
+          <div className="desktop-nav" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+            <ThreeDGlobe size={160} />
           </div>
 
           <div className="admin-sidebar" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>

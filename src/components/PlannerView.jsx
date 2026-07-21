@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, Compass, User, DollarSign, Plus, Trash2, Send, CheckCircle } from 'lucide-react';
 import { domesticDestinations, internationalDestinations } from '../data/destinations';
+import ThreeDGlobe from './ThreeDGlobe';
 
 const PlannerView = ({ onSaveInquiry }) => {
   const [destType, setDestType] = useState('preset'); // preset, custom
@@ -137,13 +138,25 @@ const PlannerView = ({ onSaveInquiry }) => {
 
   return (
     <div className="container" style={{ paddingTop: '120px', minHeight: '80vh', fontFamily: 'var(--font-sans)' }}>
-      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }} className="gradient-text">
-          Interactive Trip Studio
-        </h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-          Design an entirely customized itinerary from scratch. Build your perfect route and request a premium quote.
-        </p>
+      <div className="hero-container" style={{
+        display: 'grid',
+        gridTemplateColumns: '1.4fr 0.6fr',
+        gap: '20px',
+        alignItems: 'center',
+        marginBottom: '40px',
+        paddingTop: '20px'
+      }}>
+        <div style={{ textAlign: 'left' }}>
+          <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }} className="gradient-text">
+            Interactive Trip Studio
+          </h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', maxWidth: '600px' }}>
+            Design an entirely customized itinerary from scratch. Build your perfect route and request a premium quote.
+          </p>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <ThreeDGlobe size={200} />
+        </div>
       </div>
 
       <div className="planner-grid" style={{

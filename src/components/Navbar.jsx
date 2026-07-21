@@ -6,6 +6,12 @@ const Navbar = ({ activeRoute, setActiveRoute, currentRole, setCurrentRole, isLi
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const rolesArray = Object.values(userRoles);
 
+  const toggleRole = () => {
+    const currentIndex = rolesArray.findIndex(r => r.role === currentRole.role);
+    const nextIndex = (currentIndex + 1) % rolesArray.length;
+    setCurrentRole(rolesArray[nextIndex]);
+  };
+
   const getRoleIcon = (roleName) => {
     switch (roleName) {
       case 'Super admin': return <ShieldAlert size={14} className="text-red-500" />;
@@ -135,18 +141,24 @@ const Navbar = ({ activeRoute, setActiveRoute, currentRole, setCurrentRole, isLi
           </button>
 
           {/* Active Role Pill indicator */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '6px 12px',
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid var(--border-glass)',
-            borderRadius: '20px',
-            fontSize: '0.8rem',
-            fontWeight: '500',
-            color: 'var(--text-primary)'
-          }}>
+          <div 
+            onClick={toggleRole}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 12px',
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid var(--border-glass)',
+              borderRadius: '20px',
+              fontSize: '0.8rem',
+              fontWeight: '500',
+              color: 'var(--text-primary)',
+              cursor: 'pointer',
+              userSelect: 'none'
+            }}
+            title="Click to switch simulated system roles"
+          >
             {getRoleIcon(currentRole.role)}
             <span style={{ display: 'inline-block', maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{currentRole.role}</span>
           </div>

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-const ThreeDGlobe = () => {
+const ThreeDGlobe = ({ size = 450 }) => {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -11,33 +11,41 @@ const ThreeDGlobe = () => {
     if (!ctx) return;
 
     let animationFrameId;
-    let width = canvas.width = 450;
-    let height = canvas.height = 450;
+    let width = size;
+    let height = size;
+    let sphereRadius = size * 0.31;
 
-    // Handle high DPI displays
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-    ctx.scale(dpr, dpr);
+    // Position variables
+    let centerX = width / 2;
+    let centerY = height / 2;
+
+    const scaleCanvas = () => {
+      const containerRect = containerRef.current
+        ? containerRef.current.getBoundingClientRect()
+        : { width: size };
+      
+      // Responsive shrink for mobile viewports
+      const targetSize = Math.min(size, containerRect.width || size);
+      
+      width = targetSize;
+      height = targetSize;
+      centerX = width / 2;
+      centerY = height / 2;
+      sphereRadius = targetSize * 0.32;
+
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.scale(dpr, dpr);
+    };
+
+    scaleCanvas();
+    window.addEventListener('resize', scaleCanvas);
 
     let particles = [];
-    const particleCount = 280;
-    const sphereRadius = 140;
-    
-    // Position variables for particle sphere
-    const centerX = width / 2;
-    const centerY = height / 2;
-
-    // Rotation angles
-    let angleX = 0.003;
-    let angleY = 0.005;
-    let currentXAngle = 0;
-    let currentYAngle = 0;
-
-    // Mouse tracking for parallax tilt
-    let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+    const particleCount = Math.min(280, Math.floor(size * 0.65)); // scale particle count based on size
 
     // Generate 3D coordinates evenly on a sphere (Fibonacci lattice)
     for (let i = 0; i < particleCount; i++) {
@@ -48,7 +56,7 @@ const ThreeDGlobe = () => {
         x3d: sphereRadius * Math.sin(phi) * Math.cos(theta),
         y3d: sphereRadius * Math.sin(phi) * Math.sin(theta),
         z3d: sphereRadius * Math.cos(phi),
-        colorIndex: Math.floor(Math.random() * 3), // different shades of gold/teal
+        colorIndex: Math.floor(Math.random() * 3), // gold/teal shades
       });
     }
 
@@ -76,11 +84,15 @@ const ThreeDGlobe = () => {
       point.z3d = z;
     };
 
+    // Rotation speeds
+    let angleX = 0.003;
+    let angleY = 0.005;
+    let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+
     const handleMouseMove = (e) => {
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left - centerX;
       const y = e.clientY - rect.top - centerY;
-      // Map mouse position to small angles
       mouse.targetX = (x / centerX) * 0.2;
       mouse.targetY = (y / centerY) * 0.2;
     };
@@ -91,6 +103,7 @@ const ThreeDGlobe = () => {
     };
 
     const draw = () => {
+      if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, width, height);
 
       // Dampen mouse movements (lerp)
@@ -108,23 +121,23 @@ const ThreeDGlobe = () => {
       ctx.fill();
 
       // Draw horizontal orbital ring
-      ctx.strokeStyle = 'rgba(217, 119, 6, 0.15)';
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(217, 119, 6, 0.12)';
+      ctx.lineWidth = 0.75;
       ctx.save();
       ctx.translate(centerX, centerY);
       ctx.rotate(0.3 + mouse.x * 0.5);
-      ctx.scale(1, 0.25);
+      ctx.scale(1, 0.22);
       ctx.beginPath();
       ctx.arc(0, 0, sphereRadius * 1.25, 0, Math.PI * 2);
       ctx.stroke();
       ctx.restore();
 
       // Draw vertical orbital ring
-      ctx.strokeStyle = 'rgba(14, 165, 233, 0.1)';
+      ctx.strokeStyle = 'rgba(14, 165, 233, 0.08)';
       ctx.save();
       ctx.translate(centerX, centerY);
       ctx.rotate(-0.5 + mouse.y * 0.5);
-      ctx.scale(0.3, 1);
+      ctx.scale(0.28, 1);
       ctx.beginPath();
       ctx.arc(0, 0, sphereRadius * 1.25, 0, Math.PI * 2);
       ctx.stroke();
@@ -139,17 +152,16 @@ const ThreeDGlobe = () => {
         rotateY(p, angleY + mouse.x * 0.02);
 
         // Perspective projection calculation
-        // D is distance from viewer to screen
         const d = 400;
         const scale = d / (d + p.z3d);
         const projX = p.x3d * scale + centerX;
         const projY = p.y3d * scale + centerY;
 
         // Size based on depth
-        const radius = Math.max(1, (scale * 2.5));
+        const radius = Math.max(0.8, (scale * (size > 250 ? 2.5 : 1.6)));
 
         // Depth opacity (fade out back particles)
-        const alpha = Math.min(1, Math.max(0.1, (p.z3d + sphereRadius) / (2 * sphereRadius)));
+        const alpha = Math.min(1, Math.max(0.12, (p.z3d + sphereRadius) / (2 * sphereRadius)));
         
         ctx.fillStyle = colors[p.colorIndex];
         ctx.globalAlpha = alpha;
@@ -158,18 +170,18 @@ const ThreeDGlobe = () => {
         ctx.arc(projX, projY, radius, 0, Math.PI * 2);
         ctx.fill();
         
-        // Draw connected web lines for closer front particles
-        if (p.z3d > 10) {
+        // Draw connected web lines for closer front particles (only for larger size globes)
+        if (size > 250 && p.z3d > 10) {
           sortedParticles.forEach((other) => {
             if (other !== p && other.z3d > 10) {
               const dx = p.x3d - other.x3d;
               const dy = p.y3d - other.y3d;
               const dz = p.z3d - other.z3d;
               const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-              if (dist < 40) {
+              if (dist < 38) {
                 ctx.strokeStyle = colors[p.colorIndex];
-                ctx.globalAlpha = (1 - dist / 40) * 0.15;
-                ctx.lineWidth = 0.5;
+                ctx.globalAlpha = (1 - dist / 38) * 0.12;
+                ctx.lineWidth = 0.4;
                 ctx.beginPath();
                 ctx.moveTo(projX, projY);
                 const otherScale = d / (d + other.z3d);
@@ -194,13 +206,14 @@ const ThreeDGlobe = () => {
     }
 
     return () => {
+      window.removeEventListener('resize', scaleCanvas);
       cancelAnimationFrame(animationFrameId);
       if (currentContainer) {
         currentContainer.removeEventListener('mousemove', handleMouseMove);
         currentContainer.removeEventListener('mouseleave', handleMouseLeave);
       }
     };
-  }, []);
+  }, [size]);
 
   return (
     <div 
@@ -211,17 +224,17 @@ const ThreeDGlobe = () => {
         alignItems: 'center',
         position: 'relative',
         width: '100%',
-        maxWidth: '500px',
+        maxWidth: `${size}px`,
         margin: '0 auto',
       }}
     >
-      <canvas ref={canvasRef} style={{ pointerEvents: 'auto', cursor: 'grab' }} />
+      <canvas ref={canvasRef} style={{ pointerEvents: 'auto', cursor: 'grab', display: 'block' }} />
       {/* Decorative compass lines in the background */}
       <div 
         style={{
           position: 'absolute',
-          width: '80%',
-          height: '80%',
+          width: '84%',
+          height: '84%',
           border: '1px dashed rgba(255,255,255,0.03)',
           borderRadius: '50%',
           pointerEvents: 'none',

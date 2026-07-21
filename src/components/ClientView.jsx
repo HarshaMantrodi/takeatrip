@@ -434,7 +434,7 @@ const ClientView = ({ onSaveInquiry, setActiveRoute }) => {
               {/* Image Container */}
               <div style={{ height: '220px', width: '100%', overflow: 'hidden', position: 'relative' }}>
                 <img 
-                  src={dest.image} 
+                  src={dest.image || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80'} 
                   alt={dest.name}
                   style={{
                     width: '100%',
@@ -646,7 +646,7 @@ const ClientView = ({ onSaveInquiry, setActiveRoute }) => {
 
       {/* Destination Customization Lightbox Modal */}
       {activeDestination && (
-        <div style={{
+        <div className="modal-wrapper" style={{
           position: 'fixed',
           top: 0,
           left: 0,
@@ -660,7 +660,7 @@ const ClientView = ({ onSaveInquiry, setActiveRoute }) => {
           justifyContent: 'center',
           padding: '20px',
         }}>
-          <div className="glass" style={{
+          <div className="glass modal-glass-container" style={{
             width: '100%',
             maxWidth: '1000px',
             maxHeight: '90vh',
@@ -675,7 +675,7 @@ const ClientView = ({ onSaveInquiry, setActiveRoute }) => {
             {/* Header Image banner */}
             <div style={{ height: '240px', width: '100%', position: 'relative' }}>
               <img 
-                src={activeDestination.image} 
+                src={activeDestination.image || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80'} 
                 alt={activeDestination.name} 
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
@@ -719,7 +719,7 @@ const ClientView = ({ onSaveInquiry, setActiveRoute }) => {
             </div>
 
             {/* Modal Body: Interactive ItineraryBuilder */}
-            <div style={{ padding: '24px' }}>
+            <div className="modal-body" style={{ padding: '24px' }}>
               <ItineraryBuilder 
                 destination={activeDestination} 
                 onSaveInquiry={(inquiry) => {

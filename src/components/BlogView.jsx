@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BookOpen, Calendar, User, Eye, ArrowRight, X, Sparkles } from 'lucide-react';
+import ThreeDGlobe from './ThreeDGlobe';
 
 const BlogView = ({ blogs }) => {
   const [activeArticle, setActiveArticle] = useState(null);
@@ -24,29 +25,41 @@ const BlogView = ({ blogs }) => {
   return (
     <div className="container" style={{ paddingTop: '120px', minHeight: '80vh', fontFamily: 'var(--font-sans)' }}>
       {/* Page Header */}
-      <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '6px 12px',
-          background: 'var(--color-primary-glow)',
-          border: '1px solid var(--border-glow)',
-          borderRadius: '30px',
-          fontSize: '0.8rem',
-          color: 'var(--color-primary)',
-          fontWeight: '600',
-          marginBottom: '12px'
-        }}>
-          <BookOpen size={12} />
-          <span>Curated Travel Journals & Insights</span>
+      <div className="hero-container" style={{
+        display: 'grid',
+        gridTemplateColumns: '1.4fr 0.6fr',
+        gap: '20px',
+        alignItems: 'center',
+        marginBottom: '40px',
+        paddingTop: '20px'
+      }}>
+        <div style={{ textAlign: 'left' }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '6px 12px',
+            background: 'var(--color-primary-glow)',
+            border: '1px solid var(--border-glow)',
+            borderRadius: '30px',
+            fontSize: '0.8rem',
+            color: 'var(--color-primary)',
+            fontWeight: '600',
+            marginBottom: '12px'
+          }}>
+            <BookOpen size={12} />
+            <span>Curated Travel Journals & Insights</span>
+          </div>
+          <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }} className="gradient-text">
+            Guides & Blogs
+          </h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', maxWidth: '600px' }}>
+            Explore travel tips, local secrets, and hidden paradises written by our certified destination authors.
+          </p>
         </div>
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }} className="gradient-text">
-          Guides & Blogs
-        </h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-          Explore travel tips, local secrets, and hidden paradises written by our certified destination authors.
-        </p>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <ThreeDGlobe size={200} />
+        </div>
       </div>
 
       {publishedBlogs.length === 0 ? (
@@ -144,7 +157,7 @@ const BlogView = ({ blogs }) => {
 
       {/* Article Detail Lightbox */}
       {activeArticle && (
-        <div style={{
+        <div className="modal-wrapper" style={{
           position: 'fixed',
           top: 0,
           left: 0,
@@ -158,7 +171,7 @@ const BlogView = ({ blogs }) => {
           justifyContent: 'center',
           padding: '20px'
         }}>
-          <div className="glass" style={{
+          <div className="glass modal-glass-container" style={{
             width: '100%',
             maxWidth: '750px',
             maxHeight: '85vh',

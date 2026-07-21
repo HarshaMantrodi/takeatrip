@@ -268,9 +268,6 @@ function App() {
         {renderContent()}
       </main>
 
-      {/* Floating System Role Simulator Widget */}
-      <RoleSwitcher currentRole={currentRole} setCurrentRole={setCurrentRole} />
-
       {/* Floating Direct Call & WhatsApp Connect Desk */}
       <div style={{
         position: 'fixed',
