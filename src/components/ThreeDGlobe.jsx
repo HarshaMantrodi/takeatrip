@@ -112,8 +112,8 @@ const ThreeDGlobe = ({ size = 450 }) => {
 
       // Draw faint background glow ring
       const gradient = ctx.createRadialGradient(centerX, centerY, sphereRadius * 0.8, centerX, centerY, sphereRadius * 1.3);
-      gradient.addColorStop(0, 'rgba(217, 119, 6, 0.03)');
-      gradient.addColorStop(0.5, 'rgba(14, 165, 233, 0.02)');
+      gradient.addColorStop(0, 'rgba(217, 119, 6, 0.12)');
+      gradient.addColorStop(0.5, 'rgba(14, 165, 233, 0.08)');
       gradient.addColorStop(1, 'rgba(7, 10, 19, 0)');
       ctx.fillStyle = gradient;
       ctx.beginPath();
@@ -121,8 +121,8 @@ const ThreeDGlobe = ({ size = 450 }) => {
       ctx.fill();
 
       // Draw horizontal orbital ring
-      ctx.strokeStyle = 'rgba(217, 119, 6, 0.12)';
-      ctx.lineWidth = 0.75;
+      ctx.strokeStyle = 'rgba(217, 119, 6, 0.28)';
+      ctx.lineWidth = 0.85;
       ctx.save();
       ctx.translate(centerX, centerY);
       ctx.rotate(0.3 + mouse.x * 0.5);
@@ -133,7 +133,7 @@ const ThreeDGlobe = ({ size = 450 }) => {
       ctx.restore();
 
       // Draw vertical orbital ring
-      ctx.strokeStyle = 'rgba(14, 165, 233, 0.08)';
+      ctx.strokeStyle = 'rgba(14, 165, 233, 0.22)';
       ctx.save();
       ctx.translate(centerX, centerY);
       ctx.rotate(-0.5 + mouse.y * 0.5);
@@ -157,11 +157,11 @@ const ThreeDGlobe = ({ size = 450 }) => {
         const projX = p.x3d * scale + centerX;
         const projY = p.y3d * scale + centerY;
 
-        // Size based on depth
-        const radius = Math.max(0.8, (scale * (size > 250 ? 2.5 : 1.6)));
+        // Size based on depth - HIGHLIGHTED particles
+        const radius = Math.max(1.1, (scale * (size > 250 ? 3.4 : 2.1)));
 
         // Depth opacity (fade out back particles)
-        const alpha = Math.min(1, Math.max(0.12, (p.z3d + sphereRadius) / (2 * sphereRadius)));
+        const alpha = Math.min(1, Math.max(0.18, (p.z3d + sphereRadius) / (2 * sphereRadius)));
         
         ctx.fillStyle = colors[p.colorIndex];
         ctx.globalAlpha = alpha;
@@ -170,7 +170,7 @@ const ThreeDGlobe = ({ size = 450 }) => {
         ctx.arc(projX, projY, radius, 0, Math.PI * 2);
         ctx.fill();
         
-        // Draw connected web lines for closer front particles (only for larger size globes)
+        // Draw connected web lines for closer front particles (only for larger size globes) - HIGHLIGHTED web
         if (size > 250 && p.z3d > 10) {
           sortedParticles.forEach((other) => {
             if (other !== p && other.z3d > 10) {
@@ -180,8 +180,8 @@ const ThreeDGlobe = ({ size = 450 }) => {
               const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
               if (dist < 38) {
                 ctx.strokeStyle = colors[p.colorIndex];
-                ctx.globalAlpha = (1 - dist / 38) * 0.12;
-                ctx.lineWidth = 0.4;
+                ctx.globalAlpha = (1 - dist / 38) * 0.28;
+                ctx.lineWidth = 0.55;
                 ctx.beginPath();
                 ctx.moveTo(projX, projY);
                 const otherScale = d / (d + other.z3d);
@@ -228,7 +228,7 @@ const ThreeDGlobe = ({ size = 450 }) => {
         margin: '0 auto',
       }}
     >
-      <canvas ref={canvasRef} style={{ pointerEvents: 'auto', cursor: 'grab', display: 'block' }} />
+      <canvas ref={canvasRef} style={{ pointerEvents: 'auto', cursor: 'grab', display: 'block', maxWidth: '100%', height: 'auto' }} />
       {/* Decorative compass lines in the background */}
       <div 
         style={{

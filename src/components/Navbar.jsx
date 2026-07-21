@@ -31,7 +31,7 @@ const Navbar = ({ activeRoute, setActiveRoute, currentRole, setCurrentRole, isLi
 
   return (
     <>
-      <nav className="glass" style={{
+      <nav className="glass navbar-container" style={{
         position: 'fixed',
         top: '16px',
         left: '50%',
@@ -113,7 +113,7 @@ const Navbar = ({ activeRoute, setActiveRoute, currentRole, setCurrentRole, isLi
           ))}
         </div>
 
-        {/* Utility Actions & Hamburger */}
+        {/* Utility Actions */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -140,8 +140,9 @@ const Navbar = ({ activeRoute, setActiveRoute, currentRole, setCurrentRole, isLi
             {isLightTheme ? <Moon size={16} /> : <Sun size={16} />}
           </button>
 
-          {/* Active Role Pill indicator */}
+          {/* Active Role Pill indicator (Desktop only) */}
           <div 
+            className="desktop-nav"
             onClick={toggleRole}
             style={{
               display: 'flex',
@@ -232,6 +233,38 @@ const Navbar = ({ activeRoute, setActiveRoute, currentRole, setCurrentRole, isLi
               {activeRoute === item.id && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--color-primary)', boxShadow: '0 0 6px var(--color-primary)' }} />}
             </button>
           ))}
+
+          {/* Mobile Drawer Role Switcher Row */}
+          <div style={{
+            marginTop: '16px',
+            paddingTop: '12px',
+            borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Simulated Role:</span>
+            <button
+              onClick={() => {
+                toggleRole();
+              }}
+              style={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid var(--border-glass)',
+                padding: '6px 12px',
+                borderRadius: '20px',
+                fontSize: '0.75rem',
+                color: 'var(--text-primary)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                cursor: 'pointer'
+              }}
+            >
+              {getRoleIcon(currentRole.role)}
+              <span>{currentRole.role}</span>
+            </button>
+          </div>
         </div>
       )}
     </>

@@ -58,11 +58,15 @@
   padding: 0;
 }
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 body {
   background-color: var(--bg-space);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  overflow-x: hidden;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.5s ease, color 0.5s ease;
@@ -509,6 +513,12 @@ h4, h5, h6 {
   }
   .modal-body {
     padding: 12px !important;
+  }
+
+  /* Navbar adjustments for mobile spacing */
+  .navbar-container {
+    padding: 10px 14px !important;
+    width: 94% !important;
   }
 
   /* Hide Desktop Nav Menu */
